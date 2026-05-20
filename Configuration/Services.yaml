@@ -311,6 +311,23 @@ services:
     public: true
     shared: true
 
+  # SearchEndpointInterface is implemented by SearchResultSetService.
+  # Because SearchResultSetService requires per-request runtime arguments
+  # (TypoScriptConfiguration, Search), it cannot be autowired by the DI
+  # container. Instantiate it via GeneralUtility::makeInstance() and
+  # type-hint the result as SearchEndpointInterface in your custom controller.
+  # See Documentation/Headless/Configuration.rst for usage patterns.
+
+  ApacheSolrForTypo3\Solr\Headless\SearchApiMiddleware:
+    public: true
+    autowire: true
+    shared: false
+    arguments:
+      $logger: !service
+        class: ApacheSolrForTypo3\Solr\System\Logging\SolrLogManager
+        arguments:
+          $className: 'ApacheSolrForTypo3\Solr\Headless\SearchApiMiddleware'
+
   ApacheSolrForTypo3\Solr\Middleware\UserGroupDetectionMiddleware:
     public: true
     autowire: true

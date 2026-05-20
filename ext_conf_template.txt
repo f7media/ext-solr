@@ -22,5 +22,8 @@ monitoringType = 0
 # cat=Routes/enable/d; type=boolean; label=LLL:EXT:solr/Resources/Private/Language/locallang_be.xlf:extConf.enableRouteEnhancer
 enableRouteEnhancer = 0
 
+# cat=basic/enable/d1; type=boolean; label=Headless mode: Skip Extbase frontend plugin registration and enable the SearchApiMiddleware JSON endpoint. Use when a custom or headless frontend handles rendering. Also set plugin.tx_solr.features.headless = 1 in TypoScript.
+headless = 0
+
 # cat=advanced/enable/e; type=boolean; label=LLL:EXT:solr/Resources/Private/Language/locallang_be.xlf:extConf.allowSelfSignedCertificates
 allowSelfSignedCertificates = 0

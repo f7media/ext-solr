@@ -26,6 +26,38 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class SearchRequestBuilder
 {
+    /**
+     * Builds a SearchRequest from explicit parameters with no TypoScript or URL-argument coupling.
+     * This is the preferred API for headless / stateful-search consumers that run outside of
+     * the TYPO3 frontend plugin lifecycle (e.g. PSR-15 middlewares, REST endpoints).
+     *
+     * @param array<string> $filters Filter strings in "fieldname:value" format, e.g. ['type:pages', 'category:5']
+     */
+    public static function fromArray(
+        string $query,
+        array $filters,
+        int $page,
+        int $resultsPerPage,
+        int $pageId,
+        int $languageId,
+        string $sort = '',
+    ): SearchRequest {
+        $arguments = [
+            SearchRequest::DEFAULT_PLUGIN_NAMESPACE => [
+                'q' => $query,
+                'filter' => $filters,
+                'page' => $page,
+                'sort' => $sort,
+            ],
+        ];
+
+        /** @var SearchRequest $searchRequest */
+        $searchRequest = GeneralUtility::makeInstance(SearchRequest::class, $arguments, $pageId, $languageId);
+        $searchRequest->setResultsPerPage($resultsPerPage);
+
+        return $searchRequest;
+    }
+
     protected TypoScriptConfiguration $typoScriptConfiguration;
 
     protected FrontendUserSession $session;

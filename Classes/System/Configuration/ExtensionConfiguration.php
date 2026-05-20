@@ -158,6 +158,21 @@ class ExtensionConfiguration
         return (bool)$this->getConfigurationOrDefaultValue('enableRouteEnhancer', false);
     }
 
+    /**
+     * Returns true when headless mode is enabled.
+     *
+     * When true, the Extbase frontend plugin registrations (pi_results, pi_search,
+     * pi_frequentlySearched) are skipped and the SearchApiMiddleware is registered
+     * instead. The SuggestController plugin remains available in both modes.
+     *
+     * Can also be set programmatically before TYPO3 bootstraps the extension:
+     *   $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['solr']['headless'] = 1;
+     */
+    public function getIsHeadlessModeEnabled(): bool
+    {
+        return (bool)$this->getConfigurationOrDefaultValue('headless', false);
+    }
+
     protected function getConfigurationOrDefaultValue(string $key, mixed $defaultValue = null): mixed
     {
         return $this->configuration[$key] ?? $defaultValue;

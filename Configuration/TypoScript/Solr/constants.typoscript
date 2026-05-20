@@ -2,6 +2,16 @@ plugin.tx_solr {
   # cat=solr: basic/10/enable; type=boolean; label=Enable/disable Solr extension: EXT:solr should only be enabled for relevant sys_languages, to avoid unnecessary connections and overwritten contents.
   enabled = 1
 
+  features {
+    # cat=solr: basic/20/headless; type=boolean; label=Headless mode: When enabled, the Extbase frontend plugin (pi_results, pi_search, pi_frequentlySearched) is not registered. Use this when a custom frontend (e.g. AJAX-driven or headless TYPO3) handles rendering. Requires TYPO3_CONF_VARS[EXTENSIONS][solr][headless] = 1 to also skip plugin registration at bootstrap time.
+    headless = 0
+
+    headless {
+      # cat=solr: basic/21/headlessApiPath; type=string; label=Headless API path: URL path at which SearchApiMiddleware listens for POST requests (only active when headless = 1).
+      apiPath = /api/solr/search
+    }
+  }
+
   view {
     templateRootPath =
     partialRootPath =

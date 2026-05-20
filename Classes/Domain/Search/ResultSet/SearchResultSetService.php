@@ -29,6 +29,7 @@ use ApacheSolrForTypo3\Solr\Domain\Variants\VariantsProcessor;
 use ApacheSolrForTypo3\Solr\Event\Search\AfterInitialSearchResultSetHasBeenCreatedEvent;
 use ApacheSolrForTypo3\Solr\Event\Search\AfterSearchHasBeenExecutedEvent;
 use ApacheSolrForTypo3\Solr\Event\Search\AfterSearchQueryHasBeenPreparedEvent;
+use ApacheSolrForTypo3\Solr\Headless\SearchEndpointInterface;
 use ApacheSolrForTypo3\Solr\Search;
 use ApacheSolrForTypo3\Solr\System\Configuration\TypoScriptConfiguration;
 use ApacheSolrForTypo3\Solr\System\Logging\SolrLogManager;
@@ -43,7 +44,7 @@ use UnexpectedValueException;
  * The SearchResultSetService is responsible to build a SearchResultSet from a SearchRequest.
  * It encapsulates the logic to trigger a search in order to be able to reuse it in multiple places.
  */
-class SearchResultSetService
+class SearchResultSetService implements SearchEndpointInterface
 {
     protected Search $search;
 
