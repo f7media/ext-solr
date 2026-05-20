@@ -171,42 +171,49 @@ defined('TYPO3') or die('Access denied.');
 
     // ----- # ----- # ----- # ----- # ----- # ----- # ----- # ----- # ----- #
 
-    ExtensionUtility::configurePlugin(
-        'Solr',
-        'pi_results',
-        [
-            SearchController::class => 'results,form,detail',
-        ],
-        [
-            SearchController::class => 'results',
-        ],
-        ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,
-    );
+    // In headless mode the Fluid-based frontend plugin is intentionally omitted.
+    // Indexing, SearchResultSetService, and the SearchApiMiddleware remain fully
+    // functional so custom frontends can use EXT:solr purely as a search backend.
+    if (!$extensionConfiguration->getIsHeadlessModeEnabled()) {
+        ExtensionUtility::configurePlugin(
+            'Solr',
+            'pi_results',
+            [
+                SearchController::class => 'results,form,detail',
+            ],
+            [
+                SearchController::class => 'results',
+            ],
+            ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,
+        );
 
-    ExtensionUtility::configurePlugin(
-        'Solr',
-        'pi_search',
-        [
-            SearchController::class => 'form',
-        ],
-        [
+        ExtensionUtility::configurePlugin(
+            'Solr',
+            'pi_search',
+            [
+                SearchController::class => 'form',
+            ],
+            [
 
-        ],
-        ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,
-    );
+            ],
+            ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,
+        );
 
-    ExtensionUtility::configurePlugin(
-        'Solr',
-        'pi_frequentlySearched',
-        [
-            SearchController::class => 'frequentlySearched',
-        ],
-        [
-            SearchController::class => 'frequentlySearched',
-        ],
-        ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,
-    );
+        ExtensionUtility::configurePlugin(
+            'Solr',
+            'pi_frequentlySearched',
+            [
+                SearchController::class => 'frequentlySearched',
+            ],
+            [
+                SearchController::class => 'frequentlySearched',
+            ],
+            ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,
+        );
+    }
 
+    // The suggest plugin is registered in both modes – autocomplete is useful
+    // in headless setups too and adds no frontend rendering overhead.
     ExtensionUtility::configurePlugin(
         'Solr',
         'pi_suggest',

@@ -128,4 +128,37 @@ class ExtensionConfigurationTest extends SetUpUnitTestCase
         );
         self::assertTrue($configurationUseConfigurationAllowSelfSignedCertificates->getIsSelfSignedCertificatesEnabled());
     }
+
+    /**
+     * @throws ExtensionConfigurationExtensionNotConfiguredException
+     * @throws ExtensionConfigurationPathDoesNotExistException
+     */
+    #[Test]
+    public function headlessModeIsDisabledByDefault(): void
+    {
+        $defaultConfiguration = new ExtensionConfiguration();
+        self::assertFalse($defaultConfiguration->getIsHeadlessModeEnabled());
+    }
+
+    /**
+     * @throws ExtensionConfigurationExtensionNotConfiguredException
+     * @throws ExtensionConfigurationPathDoesNotExistException
+     */
+    #[Test]
+    public function headlessModeCanBeEnabledViaConfiguration(): void
+    {
+        $configuration = new ExtensionConfiguration(['headless' => 1]);
+        self::assertTrue($configuration->getIsHeadlessModeEnabled());
+    }
+
+    /**
+     * @throws ExtensionConfigurationExtensionNotConfiguredException
+     * @throws ExtensionConfigurationPathDoesNotExistException
+     */
+    #[Test]
+    public function headlessModeCanBeDisabledExplicitly(): void
+    {
+        $configuration = new ExtensionConfiguration(['headless' => 0]);
+        self::assertFalse($configuration->getIsHeadlessModeEnabled());
+    }
 }

@@ -58,6 +58,7 @@ and many more by searching for "solr" in the TYPO3 Extension Repository (TER).
    Solr/Index
    Configuration/Index
    Database/Index
+   Headless/Index
    Development/Index
    FAQ/Index
    Appendix/*
